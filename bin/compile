@@ -3,7 +3,7 @@
 
 # download mongodb-connector
 
-wget https://bootstrap.pypa.io/get-pip.py
+curl https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install mongo-connector
 
