@@ -2,7 +2,6 @@
 # bin/compile <build-dir> <cache-dir>
 
 # download mongodb-connector
-cd your/installation/directory
 git clone https://github.com/10gen-labs/mongo-connector.git
 cd mongo-connector
 python setup.py install
