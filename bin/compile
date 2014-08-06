@@ -5,9 +5,8 @@
 
 git clone https://github.com/10gen-labs/mongo-connector.git
 cd mongo-connector
-python setup.py install
-
-
+mkdir -p $BUILD_DIR/vendor/mongodb-connector
+sudo python setup.py install --home=$BUILD_DIR/vendor/mongodb-connector 
 
 # # fail fast
 # set -e
