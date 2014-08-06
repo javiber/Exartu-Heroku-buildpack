@@ -70,10 +70,7 @@ PYTHONPATH="${PYTHONPATH}:$BUILD_DIR/vendor/mongodb-connector/lib/python/"
 export PYTHONPATH 
 python setup.py install --home=$BUILD_DIR/vendor/mongodb-connector
 
-# mongo-connector -m MONGO_URL -t https://gozu1u5j:qav6bial6tlrryr0@maple-6361575.us-east-1.bonsai.io:443/ mongo_connector/doc_managers/elastic_doc_manager.py
-cd $BUILD_DIR/vendor/mongodb-connector
-ls
-
+$BUILD_DIR/vendor/mongodb-connector/bin/mongo-connector -m MONGO_URL -t https://gozu1u5j:qav6bial6tlrryr0@maple-6361575.us-east-1.bonsai.io:443/ mongo_connector/doc_managers/elastic_doc_manager.py
 
 # echo "-----> Resolving engine versions"
 
