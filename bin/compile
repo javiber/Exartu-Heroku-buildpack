@@ -70,7 +70,8 @@ PYTHONPATH="${PYTHONPATH}:$MC_PATH/lib/python/"
 export PYTHONPATH 
 python setup.py install --home=$MC_PATH
 
-ls /mongo_connector/doc_managers/
+ls mongo_connector
+ls mongo_connector/doc_managers
 
 # Run mongo-connector using Elasticsearch's DocManager
 $MC_PATH/bin/mongo-connector -v -s -m MONGO_URL -t https://gozu1u5j:qav6bial6tlrryr0@maple-6361575.us-east-1.bonsai.io:443 -d /mongo_connector/doc_managers/elastic_doc_manager.py
