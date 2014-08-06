@@ -4,7 +4,7 @@
 # download mongodb-connector
 
 curl https://bootstrap.pypa.io/get-pip.py | python
-pip install mongo-connector
+# pip install mongo-connector
 
 # git clone https://github.com/10gen-labs/mongo-connector.git
 # cd mongo-connector
