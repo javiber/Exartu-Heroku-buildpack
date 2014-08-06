@@ -64,7 +64,7 @@ function package_download() {
 # Download and install mongodb-connector
 git clone https://github.com/10gen-labs/mongo-connector.git
 cd mongo-connector
-MC_PATH=$BUILD_DIR/vendor/mongodb-connector/
+MC_PATH=$BUILD_DIR/vendor/mongodb-connector
 mkdir -p $MC_PATH/lib/python/
 PYTHONPATH="${PYTHONPATH}:$MC_PATH/lib/python/"
 export PYTHONPATH 
