@@ -1,6 +1,66 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
+# fail fast
+set -e
+
+# debug
+# set -x
+
+# clean up leaking environment
+unset GIT_DIR
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
+
+[ ! -d $BUILD_DIR ] && mkdir $BUILD_DIR
+[ ! -d $CACHE_DIR ] && mkdir $CACHE_DIR
+
+function error() {
+  echo " !     $*"
+  exit 1
+}
+
+function mktmpdir() {
+  dir=$(mktemp -t node-$1-XXXX)
+  rm -rf $dir
+  mkdir -p $dir
+  echo $dir
+}
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+function run_npm() {
+  command="$1"
+
+  cd "$BUILD_DIR"
+  HOME="$BUILD_DIR" $VENDORED_NODE/bin/node $VENDORED_NODE/bin/npm $command 2>&1 | indent
+
+  if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+    echo " !     Failed to $command dependencies with npm"
+    exit 1
+  fi
+}
+
+function package_download() {
+  engine="$1"
+  version="$2"
+  location="$3"
+
+  mkdir -p $location
+  package="http://s3pository.heroku.com/$engine/v$version/$engine-v$version-linux-x64.tar.gz"
+  echo " - downloading and extracting $engine from $package" | indent
+  curl $package -s -o - | tar -zxf  - -C $location --strip 1
+}
+
 # download mongodb-connector
 
 git clone https://github.com/10gen-labs/mongo-connector.git
@@ -8,65 +68,6 @@ cd mongo-connector
 mkdir -p $BUILD_DIR/vendor/mongodb-connector
 python setup.py install --home=$BUILD_DIR/vendor/mongodb-connector 
 
-# # fail fast
-# set -e
-
-# # debug
-# # set -x
-
-# # clean up leaking environment
-# unset GIT_DIR
-
-# # parse and derive params
-# BUILD_DIR=$1
-# CACHE_DIR=$2
-# LP_DIR=`cd $(dirname $0); cd ..; pwd`
-
-# [ ! -d $BUILD_DIR ] && mkdir $BUILD_DIR
-# [ ! -d $CACHE_DIR ] && mkdir $CACHE_DIR
-
-# function error() {
-#   echo " !     $*"
-#   exit 1
-# }
-
-# function mktmpdir() {
-#   dir=$(mktemp -t node-$1-XXXX)
-#   rm -rf $dir
-#   mkdir -p $dir
-#   echo $dir
-# }
-
-# function indent() {
-#   c='s/^/       /'
-#   case $(uname) in
-#     Darwin) sed -l "$c";;
-#     *)      sed -u "$c";;
-#   esac
-# }
-
-# function run_npm() {
-#   command="$1"
-
-#   cd "$BUILD_DIR"
-#   HOME="$BUILD_DIR" $VENDORED_NODE/bin/node $VENDORED_NODE/bin/npm $command 2>&1 | indent
-
-#   if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-#     echo " !     Failed to $command dependencies with npm"
-#     exit 1
-#   fi
-# }
-
-# function package_download() {
-#   engine="$1"
-#   version="$2"
-#   location="$3"
-
-#   mkdir -p $location
-#   package="http://s3pository.heroku.com/$engine/v$version/$engine-v$version-linux-x64.tar.gz"
-#   echo " - downloading and extracting $engine from $package" | indent
-#   curl $package -s -o - | tar -zxf  - -C $location --strip 1
-# }
 
 # echo "-----> Resolving engine versions"
 
