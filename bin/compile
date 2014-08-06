@@ -61,16 +61,17 @@ function package_download() {
   curl $package -s -o - | tar -zxf  - -C $location --strip 1
 }
 
-# download mongodb-connector
-
+# Download and install mongodb-connector
 git clone https://github.com/10gen-labs/mongo-connector.git
 cd mongo-connector
-mkdir -p $BUILD_DIR/vendor/mongodb-connector/lib/python/
-PYTHONPATH="${PYTHONPATH}:$BUILD_DIR/vendor/mongodb-connector/lib/python/"
+MC_PATH=$BUILD_DIR/vendor/mongodb-connector/
+mkdir -p $MC_PATH/lib/python/
+PYTHONPATH="${PYTHONPATH}:$MC_PATH/lib/python/"
 export PYTHONPATH 
-python setup.py install --home=$BUILD_DIR/vendor/mongodb-connector
+python setup.py install --home=$MC_PATH
 
-$BUILD_DIR/vendor/mongodb-connector/bin/mongo-connector -m MONGO_URL -t https://gozu1u5j:qav6bial6tlrryr0@maple-6361575.us-east-1.bonsai.io:443 -d /mongo_connector/doc_managers/elastic_doc_manager.py
+# Run mongo-connector using Elasticsearch's DocManager
+$MC_PATH/bin/mongo-connector -v -s -m MONGO_URL -t https://gozu1u5j:qav6bial6tlrryr0@maple-6361575.us-east-1.bonsai.io:443 -d /mongo_connector/doc_managers/elastic_doc_manager.py
 
 # echo "-----> Resolving engine versions"
 
