@@ -150,9 +150,3 @@ cd "$METEOR_BUILD_DIR"/bundle/programs/server
 
 echo "-----> Run npm install"
 npm install
-
-# copy over environment
-echo "-----> Copy over environment profile.d scripts"
-mkdir -p $BUILD_DIR/.profile.d
-cp "$BUILDPACK_DIR/mongo.sh" $BUILD_DIR/.profile.d/mongo.sh
-cp "$BUILDPACK_DIR/mailgun.sh" $BUILD_DIR/.profile.d/mailgun.sh
