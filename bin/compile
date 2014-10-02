@@ -143,6 +143,9 @@ mkdir -p "$METEOR_BUILD_DIR/bin"
 cp "$VENDORED_NODE/bin/node" "$METEOR_BUILD_DIR/bin/node"
 
 echo "-----> Move to app directory: /programs/server"
+ls "$METEOR_BUILD_DIR"
+ls "$METEOR_BUILD_DIR"/bundle/
+ls "$METEOR_BUILD_DIR"/bundle/programs/
 cd "$METEOR_BUILD_DIR"/bundle/programs/server
 
 echo "-----> Run npm install"
