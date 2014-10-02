@@ -124,6 +124,7 @@ echo "HACK: Run meteor first to install npm-container" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor
 
 echo "Building meteor bundle" | indent
+mkdir -p "$METEOR_BUILD_DIR"
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$METEOR_BUILD_DIR"/app --directory 2>&1 | indent
 
 #mkdir -p "$METEOR_BUILD_DIR"/app
