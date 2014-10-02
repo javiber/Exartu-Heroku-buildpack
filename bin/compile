@@ -131,11 +131,6 @@ HOME="$BUILD_DIR" mrt install --force | indent
 echo "Building meteor bundle" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$METEOR_BUILD_DIR" --directory 2>&1 | indent
 
-# mkdir -p "$METEOR_BUILD_DIR"/app
-# tar -zxf "$CACHE_DIR"/'"$BUILD_DIR"'.tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
-# rm "$CACHE_DIR"/"$BUILD_DIR".tar.gz
-############################################
-
 # vendor node into the slug
 PATH="$METEOR_BUILD_DIR/bin:$PATH"
 echo "-----> Vendoring node into slug"
@@ -143,9 +138,6 @@ mkdir -p "$METEOR_BUILD_DIR/bin"
 cp "$VENDORED_NODE/bin/node" "$METEOR_BUILD_DIR/bin/node"
 
 echo "-----> Move to app directory: /programs/server"
-ls "$METEOR_BUILD_DIR"
-ls "$METEOR_BUILD_DIR"/bundle/
-ls "$METEOR_BUILD_DIR"/bundle/programs/
 cd "$METEOR_BUILD_DIR"/bundle/programs/server
 
 echo "-----> Run npm install"
