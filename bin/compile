@@ -124,11 +124,11 @@ echo "HACK: Run meteor first to install npm-container" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor
 
 echo "Building meteor bundle" | indent
-HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$CACHE_DIR"/bundle --directory 2>&1 | indent
 
 mkdir -p "$METEOR_BUILD_DIR"/app
-tar -zxf "$CACHE_DIR"/bundle.tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
-rm "$CACHE_DIR"/bundle.tar.gz
+#tar -zxf "$CACHE_DIR"/bundle.tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
+#rm "$CACHE_DIR"/bundle.tar.gz
 ############################################
 
 # vendor node into the slug
@@ -142,9 +142,3 @@ cd "$METEOR_BUILD_DIR"/app/programs/server
 
 echo "-----> Run npm install"
 npm install
-
-# copy over environment
-echo "-----> Copy over environment profile.d scripts"
-mkdir -p $BUILD_DIR/.profile.d
-cp "$BUILDPACK_DIR/mongo.sh" $BUILD_DIR/.profile.d/mongo.sh
-cp "$BUILDPACK_DIR/mailgun.sh" $BUILD_DIR/.profile.d/mailgun.sh
