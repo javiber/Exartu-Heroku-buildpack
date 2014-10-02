@@ -112,7 +112,7 @@ echo "Meteorite installed" | indent
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
 mkdir -p "$HOME"
 ############################################
-# install meteor + packages through mrt
+# install meteor
 # bundle, and install into app/
 ############################################
 cd $BUILD_DIR
@@ -126,8 +126,6 @@ echo "Meteor installed" | indent
 echo "HACK: Run meteor first to install npm-container" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor
 
-echo "Installing packages" | indent
-HOME="$BUILD_DIR" mrt install --force | indent
 echo "Building meteor bundle" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$METEOR_BUILD_DIR" --directory 2>&1 | indent
 
