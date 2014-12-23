@@ -123,9 +123,6 @@ VENDORED_METEOR="$(mktmpdir meteor)"
 curl https://install.meteor.com | HOME="$VENDORED_METEOR" /bin/sh | indent
 echo "Meteor installed" | indent
 
-echo "HACK: Run meteor first to install npm-container" | indent
-HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor
-
 echo "Building meteor bundle" | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$METEOR_BUILD_DIR" --directory 2>&1 | indent
 
